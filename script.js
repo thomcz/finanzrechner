@@ -30,3 +30,15 @@ function calculateMonatlicherBetrag() {
 
     document.getElementById("monatlicherBetrag").value = monatlicherBetrag
 }
+
+function calculateSondertilgung() {
+    const restbetrag = parseFloat(document.getElementById("restbetrag").value)
+    const laufzeit = parseFloat(document.getElementById("laufzeit").value)
+
+    const jaehrlicheSondertilgung = restbetrag / laufzeit
+    const monatlicheSondertilgung = jaehrlicheSondertilgung / 12
+
+
+    document.getElementById("jaehrlicheSondertilgung").value = jaehrlicheSondertilgung
+    document.getElementById("monatlicheSondertilgung").value = monatlicheSondertilgung
+}

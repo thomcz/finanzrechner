@@ -1,21 +1,94 @@
 <!DOCTYPE html>
 <html>
-<body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="script.js"></script> 
+    <link rel="stylesheet" href="style.css">
+  </head>
+<body>
+  <div class="container">
+    <h2>Zinsrechner</h2>
+    <div class="row">
+      <div class="col-25">
+        <label for="laufzeit">Laufzeit (Jahre)</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="laufzeit" name="laufzeit">
+      </div>
+    </div>
 
-  <label for="laufzeit">Laufzeit:</label>
-  <input type="text" id="laufzeit" name="laufzeit"><br><br>
-  <label for="darlehen">Darlehen</label>
-  <input type="text" id="darlehen" name="darlehen"><br><br>
-  <label for="zinsatz">zinsatz</label>
-  <input type="text" id="zinsatz" name="zinsatz"><button onclick="alert('todo')">Berechnen</button> <br><br>
-  <label for="tilgungsSatz">tilgungsSatz</label>
-  <input type="text" id="tilgungsSatz" name="tilgungsSatz"><button onclick="calculateRestbetragWithTilgungSatz()">Berechnen</button><br><br>
-  <label for="monatlicherBetrag">monatlicher Betrag</label>
-  <input type="text" id="monatlicherBetrag" name="monatlicherBetrag"><button onclick="calculateMonatlicherBetrag()">Berechnen</button><br><br>
-  <label for="restbetrag">Restbetrag</label>
-  <input type="text" id="restbetrag" name="restbetrag">  <button onclick="calculateRestbetragWithMonatlicherAufwand()">Berechnen</button>
+    <div class="row">
+      <div class="col-25">
+        <label for="darlehen">Darlehen</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="darlehen" name="darlehen">
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-25">
+        <label for="zinsatz">Zinsatz (%)</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="zinsatz" name="zinsatz">
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-25">
+        <label for="tilgungsSatz">Tilgungssatz (%)</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="tilgungsSatz" name="tilgungsSatz">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <label for="monatlicherBetrag">Monatlicher Betrag</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="monatlicherBetrag" name="monatlicherBetrag">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <label for="restbetrag">Restbetrag</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="restbetrag" name="restbetrag">  
+      </div>
+    </div> 
+    <div class="row">
+      <button onclick="calculateRestbetragWithTilgungSatz()">Berechne Restbetrag mit Tilgungssatz</button>
+      <button onclick="calculateMonatlicherBetrag()">Berechne monatlicher Betrag</button>
+      <button onclick="calculateRestbetragWithMonatlicherAufwand()">Berechne Restbetrag mit monatlicher Betrag</button> 
+    </div>
+  </div>
+  <div class="container">
+    <h2>Sondertilgung</h2>
+    <div class="row">
+      <div class="col-25">
+        <label for="monatlicheSondertilgung">Monatliche Sondertilgung</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="monatlicheSondertilgung" name="monatlicheSondertilgung">
+      </div>
+    </div> 
+
+    <div class="row">
+      <div class="col-25">
+        <label for="jaehrlicheSondertilgung">Jährliche Sondertilgung</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="jaehrlicheSondertilgung" name="jaehrlicheSondertilgung">
+      </div>
+    </div> 
+    <div class="row"> 
+      <button onclick="calculateSondertilgung()">Berechne Sondertilgung</button>
+    </div> 
+</div>
 </body>
 </html>
