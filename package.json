@@ -11,12 +11,12 @@
     "type": "git",
     "url": "git+https://github.com/thomcz/finanzrechner.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "thomcz",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/thomcz/finanzrechner/issues"
   },
-  "homepage": "https://github.com/thomcz/finanzrechner#readme",
+  "homepage": "https://thomcz.github.io/finanzrechner",
   "dependencies": {
     "express": "^4.17.1"
   },
