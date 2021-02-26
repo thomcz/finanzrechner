@@ -3,7 +3,7 @@
     font-family: Helvetica, sans-serif;
   }
   
-  input[type=text] {
+  input[type=text], input[type=number] {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -61,6 +61,7 @@
   table {
     border-collapse: collapse;
     width: 100%;
+    font-size: small;
   }
   
   table td, table th {
@@ -85,5 +86,8 @@
     .col-25, .col-75 {
       width: 100%;
       margin-top: 0;
+    }
+    table {
+      font-size: xx-small;
     }
   }
