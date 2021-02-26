@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="script.js"></script> 
-    <link rel="stylesheet" href="style.css">
-  </head>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
   <div class="container">
     <h2>Zinsrechner</h2>
     <div class="row">
       <div class="col-25">
-        <label for="laufzeit">Laufzeit (Jahre)</label>
+        <label for="laufzeit">Laufzeit (Monate)</label>
       </div>
       <div class="col-75">
         <input type="text" id="laufzeit" name="laufzeit">
@@ -58,14 +60,14 @@
         <label for="restbetrag">Restbetrag</label>
       </div>
       <div class="col-75">
-        <input type="text" id="restbetrag" name="restbetrag">  
+        <input type="text" id="restbetrag" name="restbetrag">
       </div>
-    </div> 
-    <div class="row">
-      <button onclick="calculateRestbetragWithTilgungSatz()">Berechne Restbetrag mit Tilgungssatz</button>
-      <button onclick="calculateMonatlicherBetrag()">Berechne monatlicher Betrag</button>
-      <button onclick="calculateRestbetragWithMonatlicherAufwand()">Berechne Restbetrag mit monatlicher Betrag</button> 
     </div>
+    <div class="row">
+      <button onclick="calculate()">Berechne Zahlungsplan</button>
+    </div>
+  </div>
+
   </div>
   <div class="container">
     <h2>Sondertilgung</h2>
@@ -76,7 +78,7 @@
       <div class="col-75">
         <input type="text" id="monatlicheSondertilgung" name="monatlicheSondertilgung">
       </div>
-    </div> 
+    </div>
 
     <div class="row">
       <div class="col-25">
@@ -85,10 +87,22 @@
       <div class="col-75">
         <input type="text" id="jaehrlicheSondertilgung" name="jaehrlicheSondertilgung">
       </div>
-    </div> 
-    <div class="row"> 
-      <button onclick="calculateSondertilgung()">Berechne Sondertilgung</button>
-    </div> 
-</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Finanzierungs Plan</h2>
+    <table id="finanzierungsPlan">
+      <tr>
+        <th>Monat</th>
+        <th>Anfangsbestand</th>
+        <th>Zinsen</th>
+        <th>Tilgung</th>
+        <th>Endbestand</th>
+      </tr>
+    </table>
+
+
 </body>
+
 </html>
