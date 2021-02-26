@@ -10,22 +10,6 @@ class Finanzierung {
         this.restbetrag = restbetrag
         this.zahlungsplan = zahlungsplan
     }
-
-    calculateFinanzierung() {
-        let anfangsBestand = this.darlehen;
-        let zahlungsplan = []
-
-        let zahlungsplanItem = new ZahlungsplanItem(0, anfangsBestand)
-        let monatlicheAnnuitaet = zahlungsplanItem.calculateMonatlicheAnnuitaet(this.zinsatz, this.tilgungsSatz)
-
-        for (let month = 0; month < this.laufzeit; month++) {
-            let zahlungsplanItem = new ZahlungsplanItem(month + 1, anfangsBestand)
-            zahlungsplanItem = zahlungsplanItem.calculateZahlung(this.zinsatz, monatlicheAnnuitaet)
-            anfangsBestand -= zahlungsplanItem.tilgungsBetrag
-            zahlungsplan.push(zahlungsplanItem)
-        }
-        return new Finanzierung(this.laufzeit, this.darlehen, this.zinsatz, this.tilgungsSatz, monatlicheAnnuitaet, anfangsBestand, zahlungsplan)
-    }
 }
 
 class ZahlungsplanItem {
@@ -37,18 +21,35 @@ class ZahlungsplanItem {
         this.endBestand = endBestand
     }
 
-    calculateZahlung(zinsatz, monatlicheAnnuitaet) {
-        const zinsBetrag = (this.anfangsBestand * zinsatz) / 1200
-        const tilgungsBetrag = monatlicheAnnuitaet - zinsBetrag
-        const endBestand = this.anfangsBestand - tilgungsBetrag;
-        return new ZahlungsplanItem(this.monat, this.anfangsBestand, zinsBetrag, tilgungsBetrag, endBestand)
-    }
+}
 
-    calculateMonatlicheAnnuitaet(zinsatz, tilgungsSatz) {
-        const zinsBetrag = (this.anfangsBestand * zinsatz) / 1200
-        const tilgungsBetrag = (this.anfangsBestand * tilgungsSatz) / 1200
-        return zinsBetrag + tilgungsBetrag;
+export function calculateFinanzierung(laufzeit, darlehen, zinsatz, tilgungsSatz) {
+    let anfangsBestand = darlehen;
+    let zahlungsplan = []
+
+    let monatlicheAnnuitaet = calculateMonatlicheAnnuitaet(anfangsBestand, zinsatz, tilgungsSatz)
+
+    for (let month = 0; month < laufzeit; month++) {
+        let zahlungsplanItem = calculateZahlung(month + 1, anfangsBestand, zinsatz, monatlicheAnnuitaet)
+        anfangsBestand -= zahlungsplanItem.tilgungsBetrag
+        zahlungsplan.push(zahlungsplanItem)
     }
+    return new Finanzierung(laufzeit, darlehen, zinsatz, tilgungsSatz, monatlicheAnnuitaet, anfangsBestand, zahlungsplan)
+}
+export function calculateMonatlicheAnnuitaet(anfangsBestand, zinsatz, tilgungsSatz) {
+    const zinsBetrag = (anfangsBestand * zinsatz) / 1200
+    const tilgungsBetrag = (anfangsBestand * tilgungsSatz) / 1200
+    return zinsBetrag + tilgungsBetrag;
+}
+export function calculateZahlung(monat, anfangsBestand, zinsatz, monatlicheAnnuitaet) {
+    const zinsBetrag = (anfangsBestand * zinsatz) / 1200
+    const tilgungsBetrag = monatlicheAnnuitaet - zinsBetrag
+    const endBestand = anfangsBestand - tilgungsBetrag;
+    return new ZahlungsplanItem(monat, anfangsBestand, zinsBetrag, tilgungsBetrag, endBestand)
+}
+
+window.onload = function () {
+    document.getElementById("calculate").addEventListener('click', calculate)
 }
 
 function calculate() {
@@ -57,7 +58,7 @@ function calculate() {
     const zinsatz = parseFloat(document.getElementById("zinsatz").value)
     const tilgungsSatz = parseFloat(document.getElementById("tilgungsSatz").value)
 
-    const finanzierung = new Finanzierung(laufzeit, darlehen, zinsatz, tilgungsSatz).calculateFinanzierung()
+    const finanzierung = calculateFinanzierung(laufzeit, darlehen, zinsatz, tilgungsSatz)
 
     document.getElementById("monatlicherBetrag").value = finanzierung.monatlicheAnnuitaet
     document.getElementById("restbetrag").value = finanzierung.restbetrag
@@ -88,5 +89,3 @@ function setFinanzierungsplan(zahlungsplan) {
         cell4.innerHTML = element.endBestand;
     });
 }
-
-module.exports = { Finanzierung, ZahlungsplanItem }
