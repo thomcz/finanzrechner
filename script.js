@@ -1,44 +1,90 @@
-function calculateRestbetragWithMonatlicherAufwand() {
-    const laufzeit = parseFloat(document.getElementById("laufzeit").value)
-    const darlehen = parseFloat(document.getElementById("darlehen").value)
-    const zinsatz = parseFloat(document.getElementById("zinsatz").value)
-    const monatlicherBetrag = parseFloat(document.getElementById("monatlicherBetrag").value)
+const PRECISION = 2;
 
-    const restbetrag = darlehen - ((darlehen * laufzeit * ((((monatlicherBetrag * 12) * 100) / darlehen) + zinsatz)) / 100)
+class Finanzierung {
+    constructor(laufzeit, darlehen, zinsatz, tilgungsSatz, monatlicheAnnuitaet, restbetrag, zahlungsplan) {
+        this.laufzeit = laufzeit
+        this.darlehen = Number.parseFloat(darlehen).toFixed(PRECISION)
+        this.zinsatz = zinsatz
+        this.tilgungsSatz = tilgungsSatz
+        this.monatlicheAnnuitaet = Number.parseFloat(monatlicheAnnuitaet).toFixed(PRECISION)
+        this.restbetrag = Number.parseFloat(restbetrag).toFixed(PRECISION)
+        this.zahlungsplan = zahlungsplan
+    }
 
-    document.getElementById("restbetrag").value = restbetrag
+    calculateFinanzierung() {
+        let anfangsBestand = this.darlehen;
+        let zahlungsplan = []
+
+        let zahlungsplanItem = new ZahlungsplanItem(0, anfangsBestand)
+        let monatlicheAnnuitaet = zahlungsplanItem.calculateMonatlicheAnnuitaet(this.zinsatz, this.tilgungsSatz)
+
+        for (let month = 0; month < this.laufzeit; month++) {
+            let zahlungsplanItem = new ZahlungsplanItem(month + 1, anfangsBestand)
+            zahlungsplanItem = zahlungsplanItem.calculateZahlung(this.zinsatz, monatlicheAnnuitaet)
+            anfangsBestand -= zahlungsplanItem.tilgungsBetrag
+            zahlungsplan.push(zahlungsplanItem)
+        }
+        return new Finanzierung(this.laufzeit, this.darlehen, this.zinsatz, this.tilgungsSatz, monatlicheAnnuitaet, anfangsBestand, zahlungsplan)
+    }
 }
 
-function calculateRestbetragWithTilgungSatz() {
+class ZahlungsplanItem {
+    constructor(monat, anfangsBestand, zinsBetrag, tilgungsBetrag, endBestand) {
+        this.monat = monat
+        this.anfangsBestand = Number.parseFloat(anfangsBestand).toFixed(PRECISION)
+        this.zinsBetrag = Number.parseFloat(zinsBetrag).toFixed(PRECISION)
+        this.tilgungsBetrag = Number.parseFloat(tilgungsBetrag).toFixed(PRECISION)
+        this.endBestand = Number.parseFloat(endBestand).toFixed(PRECISION)
+    }
+
+    calculateZahlung(zinsatz, monatlicheAnnuitaet) {
+        const zinsBetrag = (this.anfangsBestand * zinsatz) / 1200
+        const tilgungsBetrag = monatlicheAnnuitaet - zinsBetrag
+        const endBestand = this.anfangsBestand - tilgungsBetrag;
+        return new ZahlungsplanItem(this.monat, this.anfangsBestand, zinsBetrag, tilgungsBetrag, endBestand)
+    }
+
+    calculateMonatlicheAnnuitaet(zinsatz, tilgungsSatz) {
+        const zinsBetrag = (this.anfangsBestand * zinsatz) / 1200
+        const tilgungsBetrag = (this.anfangsBestand * tilgungsSatz) / 1200
+        return zinsBetrag + tilgungsBetrag;
+    }
+}
+
+function calculate() {
     const laufzeit = parseFloat(document.getElementById("laufzeit").value)
     const darlehen = parseFloat(document.getElementById("darlehen").value)
     const zinsatz = parseFloat(document.getElementById("zinsatz").value)
     const tilgungsSatz = parseFloat(document.getElementById("tilgungsSatz").value)
 
-    const restbetrag = darlehen - (darlehen * laufzeit * (tilgungsSatz + zinsatz)) / 100
+    const finanzierung = new Finanzierung(laufzeit, darlehen, zinsatz, tilgungsSatz).calculateFinanzierung()
 
-    document.getElementById("restbetrag").value = restbetrag
+    document.getElementById("monatlicherBetrag").value = finanzierung.monatlicheAnnuitaet
+    document.getElementById("restbetrag").value = finanzierung.restbetrag
+
+    document.getElementById("jaehrlicheSondertilgung").value = finanzierung.restbetrag / finanzierung.laufzeit * 12
+    document.getElementById("monatlicheSondertilgung").value = finanzierung.restbetrag / finanzierung.laufzeit
+
+    setFinanzierungsplan(finanzierung.zahlungsplan);
 }
 
-function calculateMonatlicherBetrag() {
-    const laufzeit = parseFloat(document.getElementById("laufzeit").value)
-    const darlehen = parseFloat(document.getElementById("darlehen").value)
-    const zinsatz = parseFloat(document.getElementById("zinsatz").value)
-    const restbetrag = parseFloat(document.getElementById("restbetrag").value)
-
-    const monatlicherBetrag = ((-darlehen * laufzeit * zinsatz) + (100 * darlehen) - (100 * restbetrag)) / (1200 * laufzeit)
-
-    document.getElementById("monatlicherBetrag").value = monatlicherBetrag
-}
-
-function calculateSondertilgung() {
-    const restbetrag = parseFloat(document.getElementById("restbetrag").value)
-    const laufzeit = parseFloat(document.getElementById("laufzeit").value)
-
-    const jaehrlicheSondertilgung = restbetrag / laufzeit
-    const monatlicheSondertilgung = jaehrlicheSondertilgung / 12
-
-
-    document.getElementById("jaehrlicheSondertilgung").value = jaehrlicheSondertilgung
-    document.getElementById("monatlicheSondertilgung").value = monatlicheSondertilgung
+function setFinanzierungsplan(zahlungsplan) {
+    const table = document.getElementById("finanzierungsPlan");
+    // do not remove header row
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+    zahlungsplan.reverse().forEach(element => {
+        var row = table.insertRow();
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        var cell4 = row.insertCell(4);
+        cell0.innerHTML = element.monat;
+        cell1.innerHTML = element.anfangsBestand;
+        cell2.innerHTML = element.zinsBetrag;
+        cell3.innerHTML = element.tilgungsBetrag;
+        cell4.innerHTML = element.endBestand;
+    });
 }
