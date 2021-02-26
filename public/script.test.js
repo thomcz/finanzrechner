@@ -1,36 +1,30 @@
-const { Finanzierung, ZahlungsplanItem } = require('./script');
+import { calculateFinanzierung, calculateMonatlicheAnnuitaet, calculateZahlung  } from './script.js';
 
-describe('Zahlungsitem', () => {
-  it('should calculate monatliche annuitaet', () => {
-    const zahlungsItem = new ZahlungsplanItem(0, 100);
-
-    const monatlicheAnnuitaet = zahlungsItem.calculateMonatlicheAnnuitaet(2, 1)
-
-    expect(monatlicheAnnuitaet).toBe(0.25);
-  });
-
+describe('FinanzierungsCalculator', () => {
   it('should calculate eine monatliche zahlung', () => {
-    const zahlungsItem = new ZahlungsplanItem(0, 100);
     const zinsatz = 5
     const monatlicheAnnuitaet = 1
 
-    const zahlung = zahlungsItem.calculateZahlung(zinsatz, monatlicheAnnuitaet)
+    const zahlung = calculateZahlung(0, 100, zinsatz, monatlicheAnnuitaet)
 
     expect(zahlung.zinsBetrag).toBeCloseTo(0.42);
     expect(zahlung.tilgungsBetrag).toBeCloseTo(0.58);
     expect(zahlung.endBestand).toBeCloseTo(99.42);
   });
-});
+  
+  it('should calculate monatliche annuitaet', () => {
+    const monatlicheAnnuitaet = calculateMonatlicheAnnuitaet(100, 2, 1)
 
+    expect(monatlicheAnnuitaet).toBe(0.25);
+  });
 
-describe('Finanzierung', () => {
   it('should calculate finanzierung', () => {
     const laufzeit = 50
     const darlehen = 100
     const zinsatz = 10
     const tilgungsSatz = 10
 
-    let finanzierung = new Finanzierung(laufzeit, darlehen, zinsatz, tilgungsSatz).calculateFinanzierung();
+    let finanzierung = calculateFinanzierung(laufzeit, darlehen, zinsatz, tilgungsSatz);
 
     expect(finanzierung.monatlicheAnnuitaet).toBeCloseTo(1.67);
     expect(finanzierung.restbetrag).toBeCloseTo(48.57);
