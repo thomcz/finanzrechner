@@ -3,11 +3,11 @@ const PRECISION = 2;
 class Finanzierung {
     constructor(laufzeit, darlehen, zinsatz, tilgungsSatz, monatlicheAnnuitaet, restbetrag, zahlungsplan) {
         this.laufzeit = laufzeit
-        this.darlehen = Number.parseFloat(darlehen).toFixed(PRECISION)
+        this.darlehen = darlehen
         this.zinsatz = zinsatz
         this.tilgungsSatz = tilgungsSatz
-        this.monatlicheAnnuitaet = Number.parseFloat(monatlicheAnnuitaet).toFixed(PRECISION)
-        this.restbetrag = Number.parseFloat(restbetrag).toFixed(PRECISION)
+        this.monatlicheAnnuitaet = monatlicheAnnuitaet
+        this.restbetrag = restbetrag
         this.zahlungsplan = zahlungsplan
     }
 
@@ -31,10 +31,10 @@ class Finanzierung {
 class ZahlungsplanItem {
     constructor(monat, anfangsBestand, zinsBetrag, tilgungsBetrag, endBestand) {
         this.monat = monat
-        this.anfangsBestand = Number.parseFloat(anfangsBestand).toFixed(PRECISION)
-        this.zinsBetrag = Number.parseFloat(zinsBetrag).toFixed(PRECISION)
-        this.tilgungsBetrag = Number.parseFloat(tilgungsBetrag).toFixed(PRECISION)
-        this.endBestand = Number.parseFloat(endBestand).toFixed(PRECISION)
+        this.anfangsBestand = anfangsBestand
+        this.zinsBetrag = zinsBetrag
+        this.tilgungsBetrag = tilgungsBetrag
+        this.endBestand = endBestand
     }
 
     calculateZahlung(zinsatz, monatlicheAnnuitaet) {
@@ -88,3 +88,5 @@ function setFinanzierungsplan(zahlungsplan) {
         cell4.innerHTML = element.endBestand;
     });
 }
+
+module.exports = { Finanzierung, ZahlungsplanItem }
