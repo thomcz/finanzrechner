@@ -60,11 +60,11 @@ function calculate() {
 
     const finanzierung = calculateFinanzierung(laufzeit, darlehen, zinsatz, tilgungsSatz)
 
-    document.getElementById("monatlicherBetrag").value = finanzierung.monatlicheAnnuitaet
-    document.getElementById("restbetrag").value = finanzierung.restbetrag
+    document.getElementById("monatlicherBetrag").value = finanzierung.monatlicheAnnuitaet.toFixed(2)
+    document.getElementById("restbetrag").value = finanzierung.restbetrag.toFixed(2)
 
-    document.getElementById("jaehrlicheSondertilgung").value = finanzierung.restbetrag / finanzierung.laufzeit * 12
-    document.getElementById("monatlicheSondertilgung").value = finanzierung.restbetrag / finanzierung.laufzeit
+    document.getElementById("jaehrlicheSondertilgung").value = (finanzierung.restbetrag / finanzierung.laufzeit * 12).toFixed(2)
+    document.getElementById("monatlicheSondertilgung").value = (finanzierung.restbetrag / finanzierung.laufzeit).toFixed(2)
 
     setFinanzierungsplan(finanzierung.zahlungsplan);
 }
@@ -82,11 +82,11 @@ function setFinanzierungsplan(zahlungsplan) {
         var cell2 = row.insertCell(2);
         var cell3 = row.insertCell(3);
         var cell4 = row.insertCell(4);
-        cell0.innerHTML = element.monat;
-        cell1.innerHTML = element.anfangsBestand;
-        cell2.innerHTML = element.zinsBetrag;
-        cell3.innerHTML = element.tilgungsBetrag;
-        cell4.innerHTML = element.endBestand;
+        cell0.innerHTML = element.monat.toFixed(2);
+        cell1.innerHTML = element.anfangsBestand.toFixed(2);
+        cell2.innerHTML = element.zinsBetrag.toFixed(2);
+        cell3.innerHTML = element.tilgungsBetrag.toFixed(2);
+        cell4.innerHTML = element.endBestand.toFixed(2);
     });
 }
 

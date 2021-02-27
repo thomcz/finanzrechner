@@ -1,4 +1,4 @@
-import { calculateFinanzierung, calculateMonatlicheAnnuitaet, calculateZahlung  } from './script.js';
+import { calculateFinanzierung, calculateMonatlicheAnnuitaet, calculateZahlung  } from './app.js';
 
 describe('FinanzierungsCalculator', () => {
   it('should calculate eine monatliche zahlung', () => {
