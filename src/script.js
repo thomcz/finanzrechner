@@ -48,7 +48,7 @@ export function calculateZahlung(monat, anfangsBestand, zinsatz, monatlicheAnnui
     return new ZahlungsplanItem(monat, anfangsBestand, zinsBetrag, tilgungsBetrag, endBestand)
 }
 
-window.onload = function () {
+async function main() {
     document.getElementById("calculate").addEventListener('click', calculate)
 }
 
@@ -89,3 +89,5 @@ function setFinanzierungsplan(zahlungsplan) {
         cell4.innerHTML = element.endBestand;
     });
 }
+
+window.onload = main;

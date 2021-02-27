@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "node server.js",
+    "build": "webpack",
+    "start": "http-server docs",
     "test": "jest"
   },
   "repository": {
@@ -17,11 +18,11 @@
     "url": "https://github.com/thomcz/finanzrechner/issues"
   },
   "homepage": "https://thomcz.github.io/finanzrechner",
-  "dependencies": {
-    "express": "^4.17.1"
-  },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.13.0",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^4.4.0",
+    "http-server": "^0.12.3"
   }
 }
