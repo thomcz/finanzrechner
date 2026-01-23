@@ -68,6 +68,23 @@
 
     <div class="row">
         <div class="col-25">
+            <label for="sondertilgungInput">Monatliche Sondertilgung</label>
+        </div>
+        <div class="col-75">
+            <input
+                type="number"
+                min="0"
+                step="0.01"
+                id="sondertilgungInput"
+                name="sondertilgungInput"
+                [ngModel]="sondertilgungInput()"
+                (ngModelChange)="sondertilgungInput.set($event)"
+            />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-25">
             <label for="monatlicherBetrag">Monatlicher Betrag</label>
         </div>
         <div class="col-75">
@@ -151,6 +168,7 @@
                 <th>Anfang</th>
                 <th>Zinsen</th>
                 <th>Tilgung</th>
+                <th>Sondertilgung</th>
                 <th>Ende</th>
             </tr>
             @for (item of zahlungsplan(); track item.monat) {
@@ -159,6 +177,7 @@
                     <td>{{ item.anfangsBestand | number : '1.2-2' }}</td>
                     <td>{{ item.zinsBetrag | number : '1.2-2' }}</td>
                     <td>{{ item.tilgungsBetrag | number : '1.2-2' }}</td>
+                    <td>{{ item.sondertilgung | number : '1.2-2' }}</td>
                     <td>{{ item.endBestand | number : '1.2-2' }}</td>
                 </tr>
             }

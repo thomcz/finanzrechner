@@ -3,5 +3,6 @@ export interface ZahlungsplanItem {
     anfangsBestand: number;
     zinsBetrag: number;
     tilgungsBetrag: number;
+    sondertilgung: number;
     endBestand: number;
 }

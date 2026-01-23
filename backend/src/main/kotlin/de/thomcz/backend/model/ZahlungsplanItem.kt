@@ -5,5 +5,6 @@ data class ZahlungsplanItem(
     val anfangsBestand: Double,
     val zinsBetrag: Double,
     val tilgungsBetrag: Double,
+    val sondertilgung: Double,
     val endBestand: Double
 )

@@ -20,7 +20,8 @@ class FinanzierungController(private val finanzierungService: FinanzierungServic
             laufzeit = request.laufzeit,
             darlehen = request.darlehen,
             zinsatz = request.zinsatz,
-            tilgungsSatz = request.tilgungsSatz
+            tilgungsSatz = request.tilgungsSatz,
+            monatlicheSondertilgung = request.monatlicheSondertilgung
         )
     }
 }

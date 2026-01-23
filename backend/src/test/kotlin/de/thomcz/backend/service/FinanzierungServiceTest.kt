@@ -24,7 +24,22 @@ class FinanzierungServiceTest {
         assertEquals(100000.0, result.anfangsBestand, 0.01)
         assertEquals(250.0, result.zinsBetrag, 0.01)
         assertEquals(166.67, result.tilgungsBetrag, 0.01)
+        assertEquals(0.0, result.sondertilgung, 0.01)
         assertEquals(99833.33, result.endBestand, 0.01)
+    }
+
+    @Test
+    fun `calculateZahlung should include sondertilgung in calculation`() {
+        val monatlicheAnnuitaet = 416.67
+        val sondertilgung = 100.0
+        val result = service.calculateZahlung(1, 100000.0, 3.0, monatlicheAnnuitaet, sondertilgung)
+
+        assertEquals(1, result.monat)
+        assertEquals(100000.0, result.anfangsBestand, 0.01)
+        assertEquals(250.0, result.zinsBetrag, 0.01)
+        assertEquals(166.67, result.tilgungsBetrag, 0.01)
+        assertEquals(100.0, result.sondertilgung, 0.01)
+        assertEquals(99733.33, result.endBestand, 0.01)
     }
 
     @Test
@@ -57,5 +72,17 @@ class FinanzierungServiceTest {
         // restbetrag / laufzeit * 12 = jaehrlicheSondertilgung
         val expectedJaehrlicheSondertilgung = result.restbetrag / 12 * 12
         assertEquals(expectedJaehrlicheSondertilgung, result.jaehrlicheSondertilgung, 0.01)
+    }
+
+    @Test
+    fun `calculateFinanzierung with monatliche sondertilgung should reduce restbetrag`() {
+        val resultWithoutSondertilgung = service.calculateFinanzierung(12, 100000.0, 3.0, 2.0)
+        val resultWithSondertilgung = service.calculateFinanzierung(12, 100000.0, 3.0, 2.0, 500.0)
+
+        // With Sondertilgung, the remaining amount should be lower
+        assert(resultWithSondertilgung.restbetrag < resultWithoutSondertilgung.restbetrag)
+
+        // Each payment should include the Sondertilgung
+        assertEquals(500.0, resultWithSondertilgung.zahlungsplan[0].sondertilgung, 0.01)
     }
 }

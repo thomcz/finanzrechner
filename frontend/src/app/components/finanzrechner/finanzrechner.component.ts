@@ -16,6 +16,7 @@ export class FinanzrechnerComponent {
     darlehen = signal<number | null>(null);
     zinsatz = signal<number | null>(null);
     tilgungsSatz = signal<number | null>(null);
+    sondertilgungInput = signal<number | null>(null);
 
     monatlicheAnnuitaet = signal<number | null>(null);
     restbetrag = signal<number | null>(null);
@@ -47,6 +48,7 @@ export class FinanzrechnerComponent {
             darlehen,
             zinsatz,
             tilgungsSatz,
+            monatlicheSondertilgung: this.sondertilgungInput() ?? 0,
         };
 
         this.finanzierungService.calculateFinanzierung(request).subscribe({

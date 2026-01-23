@@ -3,4 +3,5 @@ export interface FinanzierungRequest {
     darlehen: number;
     zinsatz: number;
     tilgungsSatz: number;
+    monatlicheSondertilgung?: number;
 }
