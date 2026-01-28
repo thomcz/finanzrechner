@@ -1,186 +1,283 @@
-<div class="container">
-    <h2>Zinsrechner</h2>
-    <div class="row">
-        <div class="col-25">
-            <label for="laufzeit">Laufzeit (Monate)</label>
-        </div>
-        <div class="col-75">
-            <input
-                type="number"
-                id="laufzeit"
-                name="laufzeit"
-                [ngModel]="laufzeit()"
-                (ngModelChange)="laufzeit.set($event)"
-            />
-        </div>
+<div class="main-container">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-content">
+      <h1>
+        <mat-icon class="header-icon">calculate</mat-icon>
+        Finanzrechner
+      </h1>
+      <p class="subtitle">Professional Financial Calculator for Loan Amortization</p>
     </div>
+  </header>
 
-    <div class="row">
-        <div class="col-25">
-            <label for="darlehen">Darlehen</label>
-        </div>
-        <div class="col-75">
+  <div class="content-wrapper">
+    <!-- Calculator Form Section -->
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="section-icon">input</mat-icon>
+          Loan Calculator
+        </mat-card-title>
+        <mat-card-subtitle>Enter your loan details to calculate the payment schedule</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="calculator-form">
+          <!-- Laufzeit -->
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Loan Term (Months)</mat-label>
             <input
-                type="number"
-                min="0"
-                step="0.01"
-                id="darlehen"
-                name="darlehen"
-                [ngModel]="darlehen()"
-                (ngModelChange)="darlehen.set($event)"
+              matInput
+              type="number"
+              id="laufzeit"
+              min="1"
+              [ngModel]="laufzeit()"
+              (ngModelChange)="laufzeit.set($event)"
+              [ngModelOptions]="{standalone: true}"
+              placeholder="e.g., 360"
             />
-        </div>
-    </div>
+            <mat-icon matSuffix>calendar_month</mat-icon>
+          </mat-form-field>
 
-    <div class="row">
-        <div class="col-25">
-            <label for="zinsatz">Zinsatz (%)</label>
-        </div>
-        <div class="col-75">
+          <!-- Darlehen -->
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Loan Amount (€)</mat-label>
             <input
-                type="number"
-                min="0"
-                step="0.01"
-                id="zinsatz"
-                name="zinsatz"
-                [ngModel]="zinsatz()"
-                (ngModelChange)="zinsatz.set($event)"
+              matInput
+              type="number"
+              id="darlehen"
+              min="0"
+              step="0.01"
+              [ngModel]="darlehen()"
+              (ngModelChange)="darlehen.set($event)"
+              [ngModelOptions]="{standalone: true}"
+              placeholder="e.g., 300000"
             />
-        </div>
-    </div>
+            <mat-icon matSuffix>euro_symbol</mat-icon>
+          </mat-form-field>
 
-    <div class="row">
-        <div class="col-25">
-            <label for="tilgungsSatz">Tilgungssatz (%)</label>
-        </div>
-        <div class="col-75">
+          <!-- Zinsatz -->
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Interest Rate (%)</mat-label>
             <input
-                type="number"
-                min="0"
-                step="0.01"
-                id="tilgungsSatz"
-                name="tilgungsSatz"
-                [ngModel]="tilgungsSatz()"
-                (ngModelChange)="tilgungsSatz.set($event)"
+              matInput
+              type="number"
+              id="zinsatz"
+              min="0"
+              step="0.01"
+              [ngModel]="zinsatz()"
+              (ngModelChange)="zinsatz.set($event)"
+              [ngModelOptions]="{standalone: true}"
+              placeholder="e.g., 3.5"
             />
-        </div>
-    </div>
+            <mat-icon matSuffix>percent</mat-icon>
+          </mat-form-field>
 
-    <div class="row">
-        <div class="col-25">
-            <label for="sondertilgungInput">Monatliche Sondertilgung</label>
-        </div>
-        <div class="col-75">
+          <!-- Tilgungssatz -->
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Repayment Rate (%)</mat-label>
             <input
-                type="number"
-                min="0"
-                step="0.01"
-                id="sondertilgungInput"
-                name="sondertilgungInput"
-                [ngModel]="sondertilgungInput()"
-                (ngModelChange)="sondertilgungInput.set($event)"
+              matInput
+              type="number"
+              id="tilgungsSatz"
+              min="0"
+              step="0.01"
+              [ngModel]="tilgungsSatz()"
+              (ngModelChange)="tilgungsSatz.set($event)"
+              [ngModelOptions]="{standalone: true}"
+              placeholder="e.g., 2"
             />
-        </div>
-    </div>
+            <mat-icon matSuffix>percent</mat-icon>
+          </mat-form-field>
 
-    <div class="row">
-        <div class="col-25">
-            <label for="monatlicherBetrag">Monatlicher Betrag</label>
-        </div>
-        <div class="col-75">
+          <!-- Sondertilgung -->
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Special Monthly Repayment (€)</mat-label>
             <input
-                type="text"
-                id="monatlicherBetrag"
-                name="monatlicherBetrag"
-                [value]="monatlicheAnnuitaet() !== null ? (monatlicheAnnuitaet() | number : '1.2-2') : ''"
-                readonly
+              matInput
+              type="number"
+              id="sondertilgungInput"
+              min="0"
+              step="0.01"
+              [ngModel]="sondertilgungInput()"
+              (ngModelChange)="sondertilgungInput.set($event)"
+              [ngModelOptions]="{standalone: true}"
+              placeholder="Optional - e.g., 500"
             />
-        </div>
-    </div>
+            <mat-icon matSuffix>attach_money</mat-icon>
+          </mat-form-field>
 
-    <div class="row">
-        <div class="col-25">
-            <label for="restbetrag">Restbetrag</label>
-        </div>
-        <div class="col-75">
-            <input
-                type="text"
-                id="restbetrag"
-                name="restbetrag"
-                [value]="restbetrag() !== null ? (restbetrag() | number : '1.2-2') : ''"
-                readonly
-            />
-        </div>
-    </div>
+          <!-- Error Message -->
+          @if (error()) {
+            <div class="error-message">
+              <mat-icon class="error-icon">error_outline</mat-icon>
+              <span>{{ error() }}</span>
+            </div>
+          }
 
-    @if (error()) {
-        <div class="row error">
-            {{ error() }}
+          <!-- Calculate Button -->
+          <div class="button-group">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="calculate()"
+              [disabled]="loading()"
+              class="calculate-button"
+            >
+              <ng-container>
+                @if (loading()) {
+                  <mat-icon class="spinner-icon">hourglass_empty</mat-icon>
+                  <span>Calculating...</span>
+                } @else {
+                  <mat-icon>play_arrow</mat-icon>
+                  <span>Calculate Payment Plan</span>
+                }
+              </ng-container>
+            </button>
+          </div>
         </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Results Section -->
+    @if (monatlicheAnnuitaet() !== null || restbetrag() !== null) {
+      <mat-card class="results-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon class="section-icon">assignment</mat-icon>
+            Calculation Results
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="results-grid">
+            <!-- Monthly Amount -->
+            <div class="result-item">
+              <div class="result-label">
+                <mat-icon>calendar_month</mat-icon>
+                Monthly Payment
+              </div>
+              <div class="result-value">
+                {{ monatlicheAnnuitaet() !== null ? (monatlicheAnnuitaet() | number : '1.2-2') : '—' }} €
+              </div>
+            </div>
+
+            <!-- Remaining Amount -->
+            <div class="result-item">
+              <div class="result-label">
+                <mat-icon>balance</mat-icon>
+                Remaining Balance
+              </div>
+              <div class="result-value">
+                {{ restbetrag() !== null ? (restbetrag() | number : '1.2-2') : '—' }} €
+              </div>
+            </div>
+
+            <!-- Monthly Special Repayment -->
+            <div class="result-item">
+              <div class="result-label">
+                <mat-icon>trending_down</mat-icon>
+                Monthly Special Repayment
+              </div>
+              <div class="result-value">
+                {{ monatlicheSondertilgung() !== null ? (monatlicheSondertilgung() | number : '1.2-2') : '—' }} €
+              </div>
+            </div>
+
+            <!-- Yearly Special Repayment -->
+            <div class="result-item">
+              <div class="result-label">
+                <mat-icon>trending_down</mat-icon>
+                Yearly Special Repayment
+              </div>
+              <div class="result-value">
+                {{ jaehrlicheSondertilgung() !== null ? (jaehrlicheSondertilgung() | number : '1.2-2') : '—' }} €
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
     }
 
-    <div class="row">
-        <button id="calculate" (click)="calculate()" [disabled]="loading()">
-            {{ loading() ? 'Berechne...' : 'Berechne Zahlungsplan' }}
-        </button>
+    <!-- Payment Schedule Table -->
+    @if (zahlungsplan().length > 0) {
+      <mat-card class="table-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon class="section-icon">table_chart</mat-icon>
+            Financing Plan
+          </mat-card-title>
+          <mat-card-subtitle>
+            Monthly breakdown of your loan repayment schedule ({{ zahlungsplan().length }} months)
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="zahlungsplan()" class="financing-table">
+              <!-- Month Column -->
+              <ng-container matColumnDef="monat">
+                <th mat-header-cell *matHeaderCellDef>Month</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.monat | number : '1.0-0' }}
+                </td>
+              </ng-container>
+
+              <!-- Starting Balance Column -->
+              <ng-container matColumnDef="anfangsBestand">
+                <th mat-header-cell *matHeaderCellDef>Starting Balance</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.anfangsBestand | number : '1.2-2' }} €
+                </td>
+              </ng-container>
+
+              <!-- Interest Column -->
+              <ng-container matColumnDef="zinsBetrag">
+                <th mat-header-cell *matHeaderCellDef>Interest</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.zinsBetrag | number : '1.2-2' }} €
+                </td>
+              </ng-container>
+
+              <!-- Repayment Column -->
+              <ng-container matColumnDef="tilgungsBetrag">
+                <th mat-header-cell *matHeaderCellDef>Repayment</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.tilgungsBetrag | number : '1.2-2' }} €
+                </td>
+              </ng-container>
+
+              <!-- Special Repayment Column -->
+              <ng-container matColumnDef="sondertilgung">
+                <th mat-header-cell *matHeaderCellDef>Special Repayment</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.sondertilgung | number : '1.2-2' }} €
+                </td>
+              </ng-container>
+
+              <!-- Ending Balance Column -->
+              <ng-container matColumnDef="endBestand">
+                <th mat-header-cell *matHeaderCellDef>Ending Balance</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.endBestand | number : '1.2-2' }} €
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['monat', 'anfangsBestand', 'zinsBetrag', 'tilgungsBetrag', 'sondertilgung', 'endBestand']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['monat', 'anfangsBestand', 'zinsBetrag', 'tilgungsBetrag', 'sondertilgung', 'endBestand']"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="loading-overlay">
+      <mat-spinner></mat-spinner>
+      <p>Calculating your payment plan...</p>
     </div>
+  }
 </div>
 
-<div class="container">
-    <h2>Sondertilgung</h2>
-    <div class="row">
-        <div class="col-25">
-            <label for="monatlicheSondertilgung">Monatliche Sondertilgung</label>
-        </div>
-        <div class="col-75">
-            <input
-                type="text"
-                id="monatlicheSondertilgung"
-                name="monatlicheSondertilgung"
-                [value]="monatlicheSondertilgung() !== null ? (monatlicheSondertilgung() | number : '1.2-2') : ''"
-                readonly
-            />
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-25">
-            <label for="jaehrlicheSondertilgung">Jaehrliche Sondertilgung</label>
-        </div>
-        <div class="col-75">
-            <input
-                type="text"
-                id="jaehrlicheSondertilgung"
-                name="jaehrlicheSondertilgung"
-                [value]="jaehrlicheSondertilgung() !== null ? (jaehrlicheSondertilgung() | number : '1.2-2') : ''"
-                readonly
-            />
-        </div>
-    </div>
-</div>
-
-@if (zahlungsplan().length > 0) {
-    <div class="container">
-        <h2>Finanzierungs Plan</h2>
-        <table id="finanzierungsPlan">
-            <tr>
-                <th>Monat</th>
-                <th>Anfang</th>
-                <th>Zinsen</th>
-                <th>Tilgung</th>
-                <th>Sondertilgung</th>
-                <th>Ende</th>
-            </tr>
-            @for (item of zahlungsplan(); track item.monat) {
-                <tr>
-                    <td>{{ item.monat | number : '1.2-2' }}</td>
-                    <td>{{ item.anfangsBestand | number : '1.2-2' }}</td>
-                    <td>{{ item.zinsBetrag | number : '1.2-2' }}</td>
-                    <td>{{ item.tilgungsBetrag | number : '1.2-2' }}</td>
-                    <td>{{ item.sondertilgung | number : '1.2-2' }}</td>
-                    <td>{{ item.endBestand | number : '1.2-2' }}</td>
-                </tr>
-            }
-        </table>
-    </div>
-}

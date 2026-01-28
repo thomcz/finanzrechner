@@ -16,10 +16,10 @@ describe('App', () => {
         expect(app).toBeTruthy();
     });
 
-    it('should render Zinsrechner heading', async () => {
+    it('should render Finanzrechner heading', async () => {
         const fixture = TestBed.createComponent(App);
         await fixture.whenStable();
         const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('h2')?.textContent).toContain('Zinsrechner');
+        expect(compiled.querySelector('h1')?.textContent).toContain('Finanzrechner');
     });
 });

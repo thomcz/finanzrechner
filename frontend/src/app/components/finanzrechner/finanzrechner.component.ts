@@ -1,13 +1,33 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 import { FinanzierungService } from '../../services/finanzierung.service';
 import { Finanzierung, FinanzierungRequest, ZahlungsplanItem } from '../../models';
 
 @Component({
     selector: 'app-finanzrechner',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatIconModule,
+        MatDividerModule,
+    ],
     templateUrl: './finanzrechner.component.html',
     styleUrl: './finanzrechner.component.css',
 })
@@ -68,3 +88,4 @@ export class FinanzrechnerComponent {
         });
     }
 }
+
