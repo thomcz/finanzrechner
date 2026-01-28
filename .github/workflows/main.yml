@@ -61,6 +61,9 @@ jobs:
       - name: E2E Tests - Install dependencies
         run: cd e2e-tests && npm ci
 
+      - name: E2E Tests - Install Playwright browsers
+        run: cd e2e-tests && npx playwright install --with-deps
+
       - name: E2E Tests - Run tests
         run: cd e2e-tests && npm test
 
