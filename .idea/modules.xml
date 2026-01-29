@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/e2e-tests/e2e-tests.iml" filepath="$PROJECT_DIR$/e2e-tests/e2e-tests.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/finanzrechner.iml" filepath="$PROJECT_DIR$/.idea/finanzrechner.iml" />
       <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
     </modules>
